@@ -1,5 +1,5 @@
 {
-  "name": "Spreadsheet Template",
+  "name": "Sheet Template",
   "details":"Create a spreadsheet from a template and attach it to the card",
   "icon": {
     "url": "./icon.png"

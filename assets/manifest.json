@@ -2,7 +2,7 @@
   "name": "Spreadsheet Template",
   "details":"Create a spreadsheet from a template and attach it to the card",
   "icon": {
-    "url": "./AttachSheet.png"
+    "url": "./icon.png"
   },
   "author": "Audio Technology",
   "capabilities": [

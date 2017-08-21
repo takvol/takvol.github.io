@@ -9,6 +9,12 @@
     return [{
       icon: './icon-gray.png',
       text: 'Create sheet',
+      callback: function(t){
+        return t.popup({
+          title: "Create sheet",
+          url: 'popup.html'
+        });
+      }
     }];
   },
 });

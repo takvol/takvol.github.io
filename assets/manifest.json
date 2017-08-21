@@ -1,17 +1,17 @@
 {
-  "name": "Example test️",
-  "details":"A Power-Up to go along with the tutorial found at tech.trello.com!",
+  "name": "Spreadsheet Template",
+  "details":"Create a spreadsheet from a template and attach it to the card",
   "icon": {
     "url": "./AttachSheet.png"
   },
-  "author": "Example, Inc.",
+  "author": "Audio Technology",
   "capabilities": [
     "callback",
     "card-buttons"
   ],
   "connectors": {
     "iframe": {
-      "url": "./trello.html"
+      "url": "./index.html"
     }
   }
 }

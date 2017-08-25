@@ -4,53 +4,55 @@ t.render(function(){
   t.sizeTo('#popup').done();
 });
 
-createButton = document.querySelector('button');
+window.addEventListener('load', function(){
+var createButton = document.querySelector('button');
+
 createButton.addEventListener('click', function(event){
-  key = '67830660e9ef8b444f8c8ecfed93345873974fcf66bedc44331f8d26b20e49fd';
-  url = 'https://script.google.com/macros/s/AKfycbz62Z78Wb1iE2awWeDuV96cf1hSCBw9WfnPh1o89hp4u6M96bE/exec?key=' + key;
+  event.preventDefault();
+  var key = '67830660e9ef8b444f8c8ecfed93345873974fcf66bedc44331f8d26b20e49fd';
+  var url = 'https://script.google.com/macros/s/AKfycbz62Z78Wb1iE2awWeDuV96cf1hSCBw9WfnPh1o89hp4u6M96bE/exec?key=' + key;
+  var container = document.querySelector('#popup');
   
   createButton.style.display = 'none';
-  createButton.parentNode.innerText = 'Please wait...';
+  container.innerText = 'Please wait...';
   
   t.card('id','name','url').then(function(card){
     url += '&card_id=' + card.id + '&card_name=' + card.name + '&card_url=' + card.url;
     
     t.board('id').then(function(board){
       url += '&board_id=' + board.id;
-      httpRequest = new XMLHttpRequest();
+      var httpRequest = new XMLHttpRequest();
       
-      httpRequest.addEventListener("error", handleError('request error'));
-      httpRequest.addEventListener("abort", handleError('request aborted'));
-      httpRequest.addEventListener("timeout", handleError('request timeout'));
+      httpRequest.onerror = function(){ container.innerText = 'request error';};
+      httpRequest.onabort = function(){ container.innerText = 'request aborted';};
+      httpRequest.ontimeout = function(){ container.innerText = 'request timeout';};
       
       httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
           if (httpRequest.status === 200) {
             response = JSON.parse(httpRequest.responseText);
             if (response.status == 'OK') {
-              editButton = document.createElement('BUTTON');
+              var editButton = document.createElement('BUTTON');
               editButton.innerText = 'Edit in Google Docs';
               editButton.addEventListener('click', function(event){
                 event.preventDefault();
                 window.open(response.url, "_blank");
               });
-              createButton.parentNode.appendChild(editButton);
+              container.innerText = '';
+              container.appendChild(editButton);
               t.attach({name: response.name, url: response.url});
             } else {
-              createButton.parentNode.innerText = response.message;
+              container.innerText = response.message;
             }
             console.log(response);
           } else {
-            handleError(httpRequest.responseText);
+            container.innerText = httpRequest.responseText;
           }
         }
       };
       httpRequest.open('GET', url);
       httpRequest.send();
-      
-      function handleError(message) {
-        createButton.parentNode.innerText = message;
-      }
     });//t.board
   });//t.card
 });//eventListener
+});//window onload

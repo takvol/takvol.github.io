@@ -10,13 +10,28 @@ document.querySelector('button').addEventListener('click', function(event){
   
   t.card('id','name','url').then(function(card){
     url += '&card_id=' + card.id + '&card_name=' + card.name + '&card_url=' + card.url;
-  });
-  
-  t.board('id').then(function(board){
-    url += '&board_id=' + board.id;
-  });
-  
-  fetch(url).then(function(result){
-    console.log(result);
-  });
-});
+    
+    t.board('id').then(function(board){
+      url += '&board_id=' + board.id;
+      httpRequest = new XMLHttpRequest();
+      
+      httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+          if (httpRequest.status === 200) {
+            response = JSON.parse(httpRequest.responseText);
+//             if (response.status == 'OK') {
+//               document.getElementById("demo").innerHTML = response.url;
+//             } else {
+//               document.getElementById('demo').innerHTML = response.message;
+//             }
+            console.log(response);
+          } else {
+            console.log('Error');
+          }
+        }
+      };
+      httpRequest.open('GET', url);
+      httpRequest.send();
+    });//t.board
+  });//t.card
+});//eventListener

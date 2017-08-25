@@ -19,8 +19,8 @@ createButton.addEventListener('click', function(event){
   t.card('id','name','url').then(function(card){
     url += '&card_id=' + card.id + '&card_name=' + card.name + '&card_url=' + card.url;
     
-    t.board('id').then(function(board){
-      url += '&board_id=' + board.id;
+    t.board('id','name').then(function(board){
+      url += '&board_id=' + board.id + '&board_name=' + board.name;
       var httpRequest = new XMLHttpRequest();
       
       httpRequest.onerror = function(){ container.innerText = 'request error';};

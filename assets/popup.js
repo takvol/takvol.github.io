@@ -16,11 +16,11 @@ createButton.addEventListener('click', function(event){
   createButton.style.display = 'none';
   container.innerText = 'Please wait...';
   
-  t.card('id','name','url').then(function(card){
-    url += '&card_id=' + card.id + '&card_name=' + card.name + '&card_url=' + card.url;
+  t.card('id','name','url','shortLink').then(function(card){
+    url += '&card_id=' + card.id + '&card_name=' + card.name + '&card_url=' + card.url + '&card_short=' + card.shortLink;
     
-    t.board('id','name').then(function(board){
-      url += '&board_id=' + board.id + '&board_name=' + board.name;
+    t.board('id','name','shortLink').then(function(board){
+      url += '&board_id=' + board.id + '&board_name=' + board.name + '&board_short=' + board.shortLink;
       var httpRequest = new XMLHttpRequest();
       
       httpRequest.onerror = function(){ container.innerText = 'request error';};

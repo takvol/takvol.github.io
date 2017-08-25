@@ -4,7 +4,8 @@ t.render(function(){
   t.sizeTo('#popup').done();
 });
 
-document.querySelector('button').addEventListener('click', function(event){
+createButton = document.querySelector('button');
+createButton.addEventListener('click', function(event){
   key = '67830660e9ef8b444f8c8ecfed93345873974fcf66bedc44331f8d26b20e49fd';
   url = 'https://script.google.com/macros/s/AKfycbz62Z78Wb1iE2awWeDuV96cf1hSCBw9WfnPh1o89hp4u6M96bE/exec?key=' + key;
   
@@ -17,16 +18,25 @@ document.querySelector('button').addEventListener('click', function(event){
       
       httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
+          createButton.style.display = 'none';
           if (httpRequest.status === 200) {
             response = JSON.parse(httpRequest.responseText);
-//             if (response.status == 'OK') {
-//               document.getElementById("demo").innerHTML = response.url;
-//             } else {
-//               document.getElementById('demo').innerHTML = response.message;
-//             }
+            if (response.status == 'OK') {
+              editButton = document.createElement('BUTTON');
+              editButton.innerText = 'Edit in Google Docs';
+              editButton.addEventListener('click', function(event){
+                event.preventDefault();
+                window.open(response.url, "_blank");
+              });
+              createButton.parentNode.appendChild(editButton);
+              t.attach(response.name, response.url);
+              document.getElementById("demo").innerHTML = response.url;
+            } else {
+              createButton.parentNode.innerText = 'Exception: ' + response.message;
+            }
             console.log(response);
           } else {
-            console.log('Error');
+            createButton.parentNode.innerText = 'Exception: ' + httpRequest.responseText;
           }
         }
       };

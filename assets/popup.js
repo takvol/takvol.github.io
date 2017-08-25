@@ -48,7 +48,7 @@ createButton.addEventListener('click', function(event){
       httpRequest.open('GET', url);
       httpRequest.send();
       
-      handleError(message) {
+      function handleError(message) {
         createButton.parentNode.innerText = message;
       }
     });//t.board

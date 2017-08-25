@@ -30,13 +30,12 @@ createButton.addEventListener('click', function(event){
               });
               createButton.parentNode.appendChild(editButton);
               t.attach(response.name, response.url);
-              document.getElementById("demo").innerHTML = response.url;
             } else {
-              createButton.parentNode.innerText = 'Exception: ' + response.message;
+              createButton.parentNode.innerText = response.message;
             }
             console.log(response);
           } else {
-            createButton.parentNode.innerText = 'Exception: ' + httpRequest.responseText;
+            createButton.parentNode.innerText = httpRequest.responseText;
           }
         }
       };
